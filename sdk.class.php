@@ -75,7 +75,7 @@ class Algorithms
     * @param string $column
     * @param string $search
     * @param string $replace
-    * @return string json of file list
+    * @return string json
     */
     public function searchAndReplace( $datasource_id_seq, $column, $search, $replace ){
 
@@ -92,7 +92,44 @@ class Algorithms
 
         return $outcome;
     }
+    /**                                                                                                                                                                
+    *
+    * @param int $datasource_id_seq
+    * @param string $field_user_id
+    * @param string $field_item_id
+    * @param string $field_preference
+    * @return string json
+    */
+    public function mapFile( $datasource_id_seq, $field_user_id, $field_item_id, $field_preference ){
 
+        $url = URL_DOMAIN.API_VERSION.'/class/Mapping/method/userFields';
+
+        $post_params['authToken'] = AUTH_TOKEN;
+        $post_params['datasource_id_seq'] = $datasource_id_seq;
+        $post_params['field_user_id'] = $field_user_id;
+        $post_params['field_item_id'] = $field_item_id;
+        $post_params['field_preference'] = $field_preference;
+
+        $outcome = $this->curl->curlPost( $url, $post_params );
+
+        return $outcome;
+    }
+    /**                                                                                                                                                                
+    *
+    * @param int $datasource_id_seq
+    * @return string json                                                                                                                                              
+    */
+    public function createRecMappingFile( $datasource_id_seq ){
+
+        $url = URL_DOMAIN.API_VERSION.'/class/ArbitraryMaping/method/createXToIdMapping';
+
+        $post_params['authToken'] = AUTH_TOKEN;
+        $post_params['datasource_id_seq'] = $datasource_id_seq;
+
+        $outcome = $this->curl->curlPost( $url, $post_params );
+    
+        return $outcome;
+    }
 }
 
 
