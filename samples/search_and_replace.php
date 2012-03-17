@@ -20,14 +20,26 @@ require_once '../sdk.class.php';
 // Preparation
 $algorithms = new Algorithms();
 
-// File to upload parameters
-$file = 'test_file.csv';
-$type = 'test file';
-$friendly_name = 'Sample Upload';
-$friendly_description = 'A description';
-$version = '1';
+// Get File list
+$file_list = $algorithms->getFileList();
 
-// Upload the File
-$result = $algorithms->upload( $file, $type, $friendly_name, $friendly_description, $version );
+// Decode the json
+$file_list_json = json_decode( $file_list, true );
 
-echo $result;
+// Loop through until we find the file we uploaded in the sample and perfom
+// a search and replace
+foreach( $file_list_json['data'] as $aFile ){
+
+    if( $aFile['friendly_name'] == 'Sample Upload' ){
+
+        // Found our file.  Perform Search and Replace
+
+        $column = 'INTERNAL_PART_NUMBER'; // Column to search and replace on
+        $search = '130DNDE$'; // Search term regex
+        $replace = 'XXXXXXX'; // replace with
+
+        $outcome = $algorithms->searchAndReplace( $aFile['id_seq'], $column, $search, $replace ); 
+
+        echo $outcome;
+    }
+}

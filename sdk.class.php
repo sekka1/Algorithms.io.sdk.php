@@ -40,7 +40,7 @@ class Algorithms
     * @param string $file
     * @return int datasource_id_seq
     */
-    public function upload( $file, $filename, $type, $friendly_name, $friendly_description, $version ){
+    public function upload( $file, $type, $friendly_name, $friendly_description, $version ){
 
         $url = URL_DOMAIN.API_VERSION.'/class/DataSources/method/upload';
 
@@ -55,7 +55,43 @@ class Algorithms
 
         return $outcome;
     }
+    /**
+    *
+    * @return string json of file list
+    */
+    public function getFileList(){
 
+        $url = URL_DOMAIN.API_VERSION.'/class/DataSources/method/files';
+
+        $post_params['authToken'] = AUTH_TOKEN;
+
+        $outcome = $this->curl->curlPost( $url, $post_params );
+
+        return $outcome;
+    }
+    /**                                                                                                                                                                
+    *
+    * @param int $datasource_id_seq
+    * @param string $column
+    * @param string $search
+    * @param string $replace
+    * @return string json of file list
+    */
+    public function searchAndReplace( $datasource_id_seq, $column, $search, $replace ){
+
+        $url = URL_DOMAIN.API_VERSION.'/class/DataSourceManipulations/method/searchAndReplaceColumnCSV';
+
+        $post_params['authToken'] = AUTH_TOKEN;
+        $post_params['authToken'] = AUTH_TOKEN;
+        $post_params['datasource_id_seq'] = $datasource_id_seq;
+        $post_params['column'] = $column;
+        $post_params['search'] = $search;
+        $post_params['replace'] = $replace;
+
+        $outcome = $this->curl->curlPost( $url, $post_params );
+
+        return $outcome;
+    }
 
 }
 
