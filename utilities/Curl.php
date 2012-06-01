@@ -17,7 +17,7 @@
 class Curl
 {
 
-    public function curlPost( $url, $post_params ){
+    public function curlPost( $authToken, $http_method, $url, $post_params ){
         // Does a post and optional file upload to a given url
         // INTPUT:
         /*
@@ -27,10 +27,14 @@ class Curl
         $returnVal = '';
 
         $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HTTPHEADER,array('authToken: '.$authToken));
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_params);
+
+        if( $http_method == 'POST' ){
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post_params);
+        }
         $result = curl_exec($ch);
 
         if( $result )

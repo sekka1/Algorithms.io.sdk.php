@@ -20,14 +20,7 @@ require_once 'sdk.class.php';
 // Preparation
 $algorithms = new Algorithms();
 
-// File to upload parameters
-$file = 'data/Movie_Lens_100k_data.csv';
-$type = 'Rec';
-$friendly_name = 'Movie_Lens_100k_data';
-$friendly_description = 'Movie Lens data with 100k rows of users and preferences';
-$version = '1';
-
 // Upload the File
-$result = $algorithms->upload( $file, $type, $friendly_name, $friendly_description, $version );
+$result = $algorithms->getFileList();
 
 echo $result;
