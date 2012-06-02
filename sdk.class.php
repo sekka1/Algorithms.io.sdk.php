@@ -136,8 +136,53 @@ class Algorithms
                                                                                                          
         return $outcome;
     }
+    /*
+    *
+    * @param int $datasource_id_seq
+    */
+    public function deleteFile( $datasource_id_seq ){
+
+        $url = URL_DOMAIN.'/dataset/id/'.$datasource_id_seq;
+
+        $http_header_vars = array(
+                                'authToken: '.AUTH_TOKEN
+                            );
+        $post_params = array();
+        
+        $outcome = $this->curl->curlPost( 'DELETE', $url, $http_header_vars, $post_params );
+
+        return $outcome;
+    }
+    /*
+    *
+    */
+    public function getCredits(){
+
+        $url = URL_DOMAIN.'/credits';
+
+        $http_header_vars = array(
+                                'authToken: '.AUTH_TOKEN
+                            );
+        $post_params = array();
+
+        $outcome = $this->curl->curlPost( 'GET', $url, $http_header_vars, $post_params );
+
+        return $outcome;
+    }
+    /*
+    *
+    */
+    public function getAlgorithms(){
+
+        $url = URL_DOMAIN.'/algorithms';
+
+        $http_header_vars = array(
+                                'authToken: '.AUTH_TOKEN
+                            );
+        $post_params = array();
+
+        $outcome = $this->curl->curlPost( 'GET', $url, $http_header_vars, $post_params );
+
+        return $outcome;
+    }
 }
-
-
-
-

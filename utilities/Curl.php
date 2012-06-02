@@ -35,6 +35,9 @@ class Curl
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $post_params);
         }
+        if( $http_method == 'DELETE' ){
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+        }
         $result = curl_exec($ch);
 
         if( $result )
