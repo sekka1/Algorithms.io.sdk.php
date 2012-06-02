@@ -48,12 +48,15 @@ class Algorithms
         $url = URL_DOMAIN.'/dataset';
 
         $post_params['theFile'] = '@'.$file;
-        $post_params['type'] = $type;
-        $post_params['friendly_name'] = $friendly_name;
-        $post_params['friendly_description'] = $friendly_description;
-        $post_params['version'] = $version;
+        $http_header_vars = array(
+                                'authToken: '.AUTH_TOKEN,
+                                'type: '.$type,
+                                'friendly_name: '.$friendly_name,
+                                'friendly_description: '.$friendly_description,
+                                'version: '.$version
+                            );
 
-        $outcome = $this->curl->curlPost( AUTH_TOKEN, 'POST', $url, $post_params );
+        $outcome = $this->curl->curlPost( 'POST', $url, $http_header_vars, $post_params );
 
         return $outcome;
     }
@@ -64,9 +67,12 @@ class Algorithms
     public function getFileList(){
 
         $url = URL_DOMAIN.'/dataset';
+        $http_header_vars = array(
+                                'authToken: '.AUTH_TOKEN
+                            );
         $post_params = array();
 
-        $outcome = $this->curl->curlPost( AUTH_TOKEN, 'GET', $url, $post_params );
+        $outcome = $this->curl->curlPost( 'GET', $url, $http_header_vars, $post_params );
 
         return $outcome;
     }
@@ -77,18 +83,57 @@ class Algorithms
     * @param string $field_preference
     * @return string json
     */
-    public function mapFile( $datasource_id_seq, $field_user_id, $field_item_id, $field_preference ){
+    public function prepFileForRecommendation( $datasource_id_seq, $field_user_id, $field_item_id, $field_preference ){
 
-        $url = URL_DOMAIN.API_VERSION.'/class/Mapping/method/userFields';
+        $url = URL_DOMAIN.'/jobs';
 
-        $post_params['authToken'] = AUTH_TOKEN;
-        $post_params['datasource_id_seq'] = $datasource_id_seq;
-        $post_params['field_user_id'] = $field_user_id;
-        $post_params['field_item_id'] = $field_item_id;
-        $post_params['field_preference'] = $field_preference;
+        $http_header_vars = array(
+                                'authToken: '.AUTH_TOKEN
+                            );
+        $job['job'] = array(
+                            'algorithm'=>array(
+                                'id'=>13 
+                            ),
+                            'input_variables'=>array(
+                                'datasource_id_seq'=>$datasource_id_seq,
+                                'field_user_id'=>$field_user_id,
+                                'field_item_id'=>$field_item_id,
+                                'field_preference'=>$field_preference
+                            )
+                        );
+        $post_params['job_params'] = json_encode( $job );
 
-        $outcome = $this->curl->curlPost( $url, $post_params );
+        $outcome = $this->curl->curlPost( 'POST', $url, $http_header_vars, $post_params );
 
+        return $outcome;
+    }
+    /*
+    * @param int $datasource_id_seq
+    * @param string $type
+    * @param string $item
+    * @return string json
+    */
+    public function getRecommendation( $datasource_id_seq, $type, $item ){
+
+        $url = URL_DOMAIN.'/jobs';
+
+        $http_header_vars = array(
+                                'authToken: '.AUTH_TOKEN
+                            );
+        $job['job'] = array(
+                            'algorithm'=>array(
+                                'id'=>14
+                            ),
+                            'input_variables'=>array(
+                                'datasource_id_seq'=>$datasource_id_seq,
+                                'type'=>$type,
+                                'item'=>$item
+                            )
+                        );
+        $post_params['job_params'] = json_encode( $job );
+
+        $outcome = $this->curl->curlPost( 'POST', $url, $http_header_vars, $post_params );               
+                                                                                                         
         return $outcome;
     }
 }

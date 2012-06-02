@@ -15,7 +15,7 @@
  */
 
 // Include the SDK
-require_once '../sdk.class.php';
+require_once 'sdk.class.php';
 
 // Preparation
 $algorithms = new Algorithms();
@@ -30,22 +30,15 @@ $file_list_json = json_decode( $file_list, true );
 // so that it will be able to generate recommendations
 foreach( $file_list_json['data'] as $aFile ){
 
-    if( $aFile['friendly_name'] == 'Sample Upload' ){
-
-        // Found our file.  Perform Search and Replace
+    if( $aFile['friendly_name'] == 'Movie_Lens_100k_data' ){
 
         // Map the fields so that the system knows which column to use
         $datasource_id_seq = $aFile['id_seq'];
-        $field_user_id = 'FINAL_CUSTOMER';
-        $field_item_id = 'INTERNAL_PART_NUMBER';
-        $field_preference = 'none';
+        $field_user_id = 'user';
+        $field_item_id = 'item';
+        $field_preference = 'pref';
 
-        $outcome = $algorithms->mapFile( $datasource_id_seq, $field_user_id, $field_item_id, $field_preference );
-
-        echo $outcome . "\n";
-
-        // Tell the system to create the mapping file for recommendation
-        $outcome = $algorithms->createRecMappingFile( $datasource_id_seq );
+        $outcome = $algorithms->prepFileForRecommendation( $datasource_id_seq, $field_user_id, $field_item_id, $field_preference );
 
         echo $outcome . "\n";
     }

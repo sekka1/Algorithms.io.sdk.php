@@ -15,9 +15,30 @@
  */
 
 // Include the SDK
-require_once '../sdk.class.php';
+require_once 'sdk.class.php';
 
 // Preparation
 $algorithms = new Algorithms();
 
+// Get File list
+$file_list = $algorithms->getFileList();
 
+// Decode the json
+$file_list_json = json_decode( $file_list, true );
+
+// Loop through until we find the file we uploaded in the sample and prep this file
+// so that it will be able to generate recommendations
+foreach( $file_list_json['data'] as $aFile ){
+
+    if( $aFile['friendly_name'] == 'Movie_Lens_100k_data' ){
+
+        // Map the fields so that the system knows which column to use
+        $datasource_id_seq = $aFile['id_seq'];
+        $type = 'item';
+        $item = 'Terminator The 1984';
+
+        $outcome = $algorithms->getRecommendation( $datasource_id_seq, $type, $item );
+
+        echo $outcome . "\n";
+    }
+}
