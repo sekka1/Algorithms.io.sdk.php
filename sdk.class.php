@@ -18,7 +18,7 @@
 /**
  * CONSTANTS
  */
-define('AUTH_TOKEN', '9557dbc02260f70a82c982791f693eb6');
+define('AUTH_TOKEN', '<Replace with your authToken>');
 define('URL_DOMAIN', 'http://v1.api.algorithms.io');
 
 /**
