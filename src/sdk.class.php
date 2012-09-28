@@ -24,7 +24,7 @@ define('URL_DOMAIN', 'http://v1.api.algorithms.io');
 /**
  * INCLUDES
  */
-require_once 'utilities/Curl.php';
+require_once 'Curl.php';
 
 class Algorithms
 {

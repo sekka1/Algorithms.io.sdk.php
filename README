@@ -1,4 +1,43 @@
 Algorithms.io SDK PHP
 
 
-src/
+Notes:
+
+The HTTP directory is used within the AlgorithmsIO.class.php and the Algorithms.IO_SDK classes
+
+
+|-- HTTP
+|   |-- Net
+|   |   `-- URL2.php
+|   |-- Request2
+|   |   |-- Adapter
+|   |   |   |-- Curl.php
+|   |   |   |-- Mock.php
+|   |   |   `-- Socket.php
+|   |   |-- Adapter.php
+|   |   |-- CookieJar.php
+|   |   |-- Exception.php
+|   |   |-- MultipartBody.php
+|   |   |-- Observer
+|   |   |   `-- Log.php
+|   |   |-- Response.php
+|   |   |-- SOCKS5.php
+|   |   `-- SocketWrapper.php
+|   `-- Request2.php
+|-- data
+|   `-- Movie_Lens_100k_data.csv
+|-- samples
+|   |-- delete_all_files.php
+|   |-- get_algorithms.php
+|   |-- get_credits.php
+|   |-- get_recommendation.php
+|   |-- list_files.php
+|   |-- prep_recommendations.php
+|   `-- upload_a_file.php
+`-- src
+    |-- AlgorithmsIO.class.php
+    |-- AlgorithmsIO_SDK_UnitTest.php
+    |-- AlgorithmsIO_SDK_test.php
+    |-- Curl.php
+    `-- sdk.class.php
+
